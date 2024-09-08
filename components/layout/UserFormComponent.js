@@ -24,7 +24,7 @@ export default function UserFormComponent() {
     mapName: ''
   });
   const [isFormComplete, setIsFormComplete] = useState(false);
-  const [isFormSubmitted, setIsFormSubmitted] = useState(false);
+  const [isUploadFormVisible, setIsUploadFormVisible] = useState(false);
   const [isSelected, setIsSelected] = useState(false);
   const [videoFile, setVideoFile] = useState(null);
   const [musicFile, setMusicFile] = useState(null);
@@ -35,7 +35,7 @@ export default function UserFormComponent() {
   const [alertMessage, setAlertMessage] = useState('');
   const videoInputRef = useRef(null);
   const musicInputRef = useRef(null);
-  const router = useRouter()
+  const router = useRouter();
 
   useEffect(() => {
     setIsClient(true);
@@ -49,7 +49,6 @@ export default function UserFormComponent() {
 
     const isInitiallyComplete = Object.values(initialData).every(value => value.trim().length > 0);
     setIsFormComplete(isInitiallyComplete);
-    setIsFormSubmitted(isInitiallyComplete);
   }, [userInfo]);
 
   useEffect(() => {
@@ -60,6 +59,22 @@ export default function UserFormComponent() {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleNext = () => {
+    if (isFormComplete) {
+      setUserInfo(formData);
+      setIsUploadFormVisible(true);
+    } else {
+      showAlert('Please fill in all fields before proceeding.');
+    }
+  };
+
+  const handleBack = () => {
+    setIsUploadFormVisible(false);
+    setVideoFile(null);
+    setMusicFile(null);
+    setIsSelected(false);
   };
 
   const handleClick = () => {
@@ -169,7 +184,7 @@ export default function UserFormComponent() {
     setVideoFile(null);
     setMusicFile(null);
     setIsSelected(false);
-    setIsFormSubmitted(false);
+    setIsUploadFormVisible(false);
     setUploadStatus('');
     setUploadProgress(0);
     setIsAlertModalOpen(false);
@@ -189,7 +204,7 @@ export default function UserFormComponent() {
     );
   }
 
-  if (isFormSubmitted && isFormComplete) return (
+  if (isUploadFormVisible) return (
     <div className='flex flex-col gap-5 w-full'>
       <div 
         className="border-2 border-gray-700 border-dashed py-8 px-5 w-full rounded-xl cursor-pointer bg-black/10"
@@ -252,16 +267,27 @@ export default function UserFormComponent() {
           </div>
         </div>
       )}
-      <Button 
-        className="cursor-pointer"
-        color="primary" 
-        size="lg" 
-        variant="flat" 
-        onClick={handleUpload}
-        disabled={!videoFile || uploadStatus === 'uploading'}
-      >
-        {uploadStatus === 'uploading' ? 'Uploading...' : 'Upload Files'}
-      </Button>
+
+      <div className="flex justify-between items-center">
+        <Button 
+          className="cursor-pointer self-start"
+          size="lg" 
+          variant="flat" 
+          onClick={handleBack}
+        >
+          Go Back
+        </Button>
+        <Button 
+          className="cursor-pointer"
+          color="primary" 
+          size="lg" 
+          variant="flat" 
+          onClick={handleUpload}
+          disabled={!videoFile || uploadStatus === 'uploading'}
+        >
+          {uploadStatus === 'uploading' ? 'Uploading...' : 'Upload Video'}
+        </Button>
+      </div>
 
       {/* Progress Modal */}
       <Modal 
@@ -308,7 +334,7 @@ export default function UserFormComponent() {
       <Input required value={formData.gameMode} type="text" label="Game Mode" name="gameMode" placeholder="Search & Destroy" onChange={handleInputChange} />
       <Input required value={formData.weapon} type="text" label="Weapons" placeholder="AK17 & AK47" name="weapon" onChange={handleInputChange} />
       <Input required value={formData.mapName} type="text" label="Map Name" name="mapName" placeholder="Crash" onChange={handleInputChange} />
-      <Button className="cursor-pointer" color="primary" size="lg" onClick={handleClick} disabled={!isFormComplete} variant="flat">
+      <Button className="cursor-pointer" color="primary" size="lg" onClick={handleNext} disabled={!isFormComplete} variant="flat">
         Next
       </Button>
     </div>
