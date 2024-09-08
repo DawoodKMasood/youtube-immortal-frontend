@@ -13,7 +13,7 @@ import { Button } from '@nextui-org/button';
 export default function HomeComponent() {
   return (
     <div className="relative flex flex-col items-center px-5">
-        <Link href="/" className='cursor-pointer'>
+        <Link href="/" className='cursor-pointer z-40'>
           <Image src={Logo} width={200} height={200} alt='Logo' priority />
         </Link>
         <div className='flex flex-col gap-5 max-w-[728px] w-full lg:bg-black/20 rounded-xl mb-10 py-5 lg:py-16 lg:px-20 lg:shadow-xl z-10'>
