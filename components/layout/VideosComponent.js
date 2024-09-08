@@ -56,7 +56,7 @@ const VideosComponent = () => {
             </div>
             <div className="grid grid-cols-1 gap-4">
                 {videos.map((video) => (
-                    <Link href={video.status === 'COMPLETED' ? `https://immortals-cod-api.playwox.com/video/${video.id}/download` : '#'} target='_blank'>
+                    <Link key={video.id} href={video.status === 'COMPLETED' ? `https://immortals-cod-api.playwox.com/video/${video.id}/download` : '#'} target='_blank'>
                         <Card>
                             <CardBody className='flex gap-5'>
                                 <div>
