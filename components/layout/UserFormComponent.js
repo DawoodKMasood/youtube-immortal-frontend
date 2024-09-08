@@ -110,13 +110,17 @@ export default function UserFormComponent() {
   
     try {
       let musicFilename = null;
-      if (musicFile) {
+      const hasMusicFile = !!musicFile;
+      const musicProgressWeight = hasMusicFile ? 0.3 : 0;
+      const videoProgressWeight = 1 - musicProgressWeight;
+  
+      if (hasMusicFile) {
         musicFilename = await uploadMusic(musicFile, (progressEvent) => {
           const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-          setUploadProgress(percentCompleted / 2);  // Music upload is 50% of total progress
+          setUploadProgress(percentCompleted * musicProgressWeight);
         });
       }
-
+  
       const videoUploadResult = await uploadFile({
         file: videoFile,
         accountName: formData.accountName,
@@ -126,10 +130,11 @@ export default function UserFormComponent() {
         backgroundMusicFilename: musicFilename,
         onUploadProgress: (progressEvent) => {
           const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-          setUploadProgress(50 + percentCompleted / 2);  // Video upload is the other 50% of total progress
+          const baseProgress = hasMusicFile ? musicProgressWeight * 100 : 0;
+          setUploadProgress(baseProgress + percentCompleted * videoProgressWeight);
         },
       });
-
+  
       await processVideo(videoUploadResult.filename, musicFilename);
   
       setUploadStatus('success');
