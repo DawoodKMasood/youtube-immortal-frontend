@@ -45,13 +45,13 @@ export default function UserFormComponent() {
     };
     setFormData(initialData);
 
-    const isInitiallyComplete = Object.values(initialData).every(value => value.length > 0);
+    const isInitiallyComplete = Object.values(initialData).every(value => value.trim().length > 0);
     setIsFormComplete(isInitiallyComplete);
     setIsFormSubmitted(isInitiallyComplete);
   }, [userInfo]);
 
   useEffect(() => {
-    const isComplete = Object.values(formData).every(value => value.length > 0);
+    const isComplete = Object.values(formData).every(value => value.trim().length > 0);
     setIsFormComplete(isComplete);
   }, [formData]);
 
@@ -64,6 +64,8 @@ export default function UserFormComponent() {
     if (isFormComplete) {
       setUserInfo(formData);
       setIsFormSubmitted(true);
+    } else {
+      showAlert('Please fill in all fields before proceeding.');
     }
   };
 
@@ -173,7 +175,7 @@ export default function UserFormComponent() {
     );
   }
 
-  if (isFormSubmitted) return (
+  if (isFormSubmitted && isFormComplete) return (
     <div className='flex flex-col gap-5 w-full'>
       <div 
         className="border-2 border-gray-700 border-dashed py-8 px-5 w-full rounded-xl cursor-pointer bg-black/10"
