@@ -158,6 +158,12 @@ export default function UserFormComponent() {
       weapon: '',
       mapName: ''
     });
+    setUserInfo({
+      accountName: userInfo.accountName,
+      gameMode: '',
+      weapon: '',
+      mapName: ''
+    })
     setVideoFile(null);
     setMusicFile(null);
     setIsSelected(false);
