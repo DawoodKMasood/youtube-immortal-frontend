@@ -1,7 +1,7 @@
-import HomeComponent from "@/components/layout/Home";
+import HomeComponent from "@/components/layout/HomeComponent";
 
 export default function Home() {
-  return (
-    <HomeComponent />
-  );
-}
+    return (
+      <HomeComponent />
+    );
+  }

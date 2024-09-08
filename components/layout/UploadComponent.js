@@ -1,15 +1,18 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import UserFormComponent from './UserFormComponent';
 import ImageLoaderComponent from './ImageLoader';
 import Left from "@/assets/docs-left.png"
 import Right from "@/assets/docs-right.png"
 import Logo from "@/assets/logo.png"
 
-export default function HomeComponent() {
+export default function UploadComponent() {
   return (
     <div className="relative flex flex-col items-center px-5">
-        <Image src={Logo} width={200} height={200} alt='Logo' priority />
-        <div className='flex flex-col gap-5 max-w-[728px] w-full lg:bg-black/20 rounded-xl mb-10 py-5 lg:py-16 px-5 lg:px-20 lg:shadow-xl z-10'>
+        <Link href="/" className='cursor-pointer'>
+          <Image src={Logo} width={200} height={200} alt='Logo' priority />
+        </Link>
+        <div className='flex flex-col gap-5 max-w-[728px] w-full lg:bg-black/20 rounded-xl mb-10 py-5 lg:py-16 lg:px-20 lg:shadow-xl z-10'>
             <UserFormComponent />
         </div>
         <div className="fixed opacity-70 -bottom-[40%] -left-[20%] z-0">

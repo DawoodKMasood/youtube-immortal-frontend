@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef } from "react";
+import { useRouter } from 'next/navigation'
 import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/button"
 import { Spinner } from "@nextui-org/spinner";
@@ -34,6 +35,7 @@ export default function UserFormComponent() {
   const [alertMessage, setAlertMessage] = useState('');
   const videoInputRef = useRef(null);
   const musicInputRef = useRef(null);
+  const router = useRouter()
 
   useEffect(() => {
     setIsClient(true);
@@ -171,6 +173,7 @@ export default function UserFormComponent() {
     setUploadStatus('');
     setUploadProgress(0);
     setIsAlertModalOpen(false);
+    router.push('/')
   };
 
   const showAlert = (message) => {
@@ -301,10 +304,10 @@ export default function UserFormComponent() {
 
   return (
     <div className='flex flex-col gap-5 w-full'>
-      <Input required value={formData.accountName} type="text" label="Account Name" name="accountName" onChange={handleInputChange} />
-      <Input required value={formData.gameMode} type="text" label="Game Mode" name="gameMode" onChange={handleInputChange} />
-      <Input required value={formData.weapon} type="text" label="Weapon" name="weapon" onChange={handleInputChange} />
-      <Input required value={formData.mapName} type="text" label="Map Name" name="mapName" onChange={handleInputChange} />
+      <Input required value={formData.accountName} type="text" label="Account Name" name="accountName" placeholder="IGN" onChange={handleInputChange} />
+      <Input required value={formData.gameMode} type="text" label="Game Mode" name="gameMode" placeholder="Search & Destroy" onChange={handleInputChange} />
+      <Input required value={formData.weapon} type="text" label="Weapons" placeholder="AK17 & AK47" name="weapon" onChange={handleInputChange} />
+      <Input required value={formData.mapName} type="text" label="Map Name" name="mapName" placeholder="Crash" onChange={handleInputChange} />
       <Button className="cursor-pointer" color="primary" size="lg" onClick={handleClick} disabled={!isFormComplete} variant="flat">
         Next
       </Button>
