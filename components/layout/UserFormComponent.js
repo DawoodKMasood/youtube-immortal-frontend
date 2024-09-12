@@ -88,12 +88,12 @@ export default function UserFormComponent() {
 
   const handleFileUpload = (e, fileType) => {
     const file = e.target.files[0];
-    if (fileType === 'video' && (file?.type === 'video/mp4' || file?.type === 'video/quicktime')) {
+    if (fileType === 'video' && file?.type === 'video/mp4') {
       setVideoFile(file);
     } else if (fileType === 'music' && file?.type === 'audio/mpeg') {
       setMusicFile(file);
     } else {
-      showAlert(`Please upload a valid ${fileType === 'video' ? '.mp4 or .mov' : '.mp3'} file`);
+      showAlert(`Please upload a valid ${fileType === 'video' ? '.mp4' : '.mp3'} file`);
     }
   };
 
@@ -106,12 +106,12 @@ export default function UserFormComponent() {
     e.preventDefault();
     e.stopPropagation();
     const file = e.dataTransfer.files[0];
-    if (fileType === 'video' && (file.type === 'video/mp4' || file.type === 'video/quicktime')) {
+    if (fileType === 'video' && file.type === 'video/mp4') {
       setVideoFile(file);
     } else if (fileType === 'music' && file.type === 'audio/mpeg') {
       setMusicFile(file);
     } else {
-      showAlert(`Please upload a valid ${fileType === 'video' ? '.mp4 or .mov' : '.mp3'} file`);
+      showAlert(`Please upload a valid ${fileType === 'video' ? '.mp4' : '.mp3'} file`);
     }
   };
 
@@ -227,7 +227,7 @@ export default function UserFormComponent() {
                 <span className="text-blue-500">Upload a file</span> or drag and drop
               </div>
               <span className="block text-sm text-gray-400 text-center">
-              (Only .mp4 and .mov files are allowed)
+                (Only .mp4 is allowed for upload)
               </span>
             </div>
           )}
